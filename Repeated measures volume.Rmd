@@ -6,7 +6,7 @@ editor_options:
 bibliography: References4.bib
 ---
 
-# Single- vs multiple-set training for strength development
+# Single-set vs multiple-set training for strength development
 
 ## Introduction
 Previously, Schlumberger et al. [-@Schlumberger2001], have found significant strength improvements in women after a 6 weeks training intervention where the participants performed either one-set or multiple-set training (6 % and 15 %, respectively). However, calculation of effect sizes and percentage gains revealed higher strength gains in the multiple-set group compared to the single-set group. This is supported by a meta analysis conducted by Galvão et al. [-@Galvão2004], who states that studies prior to 1998 demonstrated inconsistent findings between single-set and multiple-set programs, but that recent evidence suggests that multiple-sets promote additional benefits following short- and long-term training.
