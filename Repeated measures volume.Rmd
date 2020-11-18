@@ -1,0 +1,265 @@
+---
+title: "Repeated measures volume"
+output: html_document
+editor_options: 
+  chunk_output_type: console
+bibliography: References4.bib
+---
+
+# Single- vs multiple-set training for strength development
+
+## Introduction
+Previously, Schlumberger et al. [-@Schlumberger2001], have found significant strength improvements in women after a 6 weeks training intervention where the participants performed either one-set or multiple-set training (6 % and 15 %, respectively). However, calculation of effect sizes and percentage gains revealed higher strength gains in the multiple-set group compared to the single-set group. This is supported by a meta analysis conducted by Galvão et al. [-@Galvão2004], who states that studies prior to 1998 demonstrated inconsistent findings between single-set and multiple-set programs, but that recent evidence suggests that multiple-sets promote additional benefits following short- and long-term training.
+
+In this study, 34 participants completed a strength training intervention were they were randomized to single-set (one set) or multiple-sets (three sets) training, randomized to either leg. Strength was measured as isokinetic strength at 60, 120 and 240 degrees and isometric strength, all in knee extension. Strength was measured two times before the training intervention (pre-test and session 1), and one time after the intervention (post-test). We will use data from one leg per participant, which means that participants have been allocated to either the single- or the multiple-set group. 
+
+The goal of this report is to find out which training volume, one or three sets, gives the larger development of strength measured as isokinetic strength at 60 degrees in knee extension.
+
+#### Question
+> What should be the recommended volume for strength development, one or three sets?
+
+#### Hypothesis
+> Three sets give a larger development of strength measured as isokinetic strength at 60 degrees in knee extension, compared to one set
+
+
+## Methods
+We wanted to estimate the difference between the single- and multiple-set (three sets) groups in isokinetic strength at 60 degrees in knee extension when controlling for baseline after a strength training intervention. The data set contained several variables, so we first had to reduce our data to only contain our variables of interest: the maximal isokinetic load at 60 degrees in knee extension, at pre-, session1- and post-test for both the single- and multiple-set groups. Because we have repeated measures, we have to account for correlated data to avoid that it affects the statistical power. A mixed model accounts for potential differences between the groups at baseline, and was therefore used to estimate the difference in mean between the two groups at both pre-, session1- and post-test. Confidence intervals were used to evaluate the effects. The data was plotted in a combined plot, where the first one shows changes in strength for each participant and estimated averages in each group at time-points pre, session1 and post, and the second shows the average group differences at time-points session1 and post.
+
+## Results
+```{r, include=FALSE, warning=FALSE, message=FALSE}
+
+# Loading needed packages
+library(tidyverse)
+library(readxl)
+library(kableExtra)
+library(knitr)
+library(broom)
+library(lme4)
+library(emmeans)
+library(cowplot)
+
+# Loading and checking the data
+data <- read_csv("./data/strengthTests.csv", na = "NA")
+
+# Preparing the data for isok.60
+isok.data <- data %>% 
+  filter(!is.na(load)) %>% # Rempving NA from the variable "load"
+  filter(exercise == "isok.60",           # Chosing isok.60
+         timepoint %in% c("pre", "session1", "post")) %>%  # Choosing timepoints
+  mutate(timepoint = factor(timepoint, 
+                            levels = c("pre", "session1", "post")),# Fixing the order of timepoint)
+         group = factor(group,
+                        levels = c("single", "multiple"))) # Fixing the order of groups (comparing to single)
+
+isok.data # Printing the results
+
+# Plotting a figure that shows changes in strength for each participant in each group
+isok.figure <- isok.data %>%
+  mutate(timepoint = factor(timepoint, levels = c("pre", "session1", "post"))) %>%
+  ggplot(aes(timepoint, load, group = subject, color = group)) + # Deciding axis and adding a color to each group
+  geom_line() + # Each subject gets a line
+  labs(x = "Time-point", y = "Load (Nm)") +    # Changing the axis´ names
+  theme_minimal()                              # Choosing layout
+
+isok.figure # Printing the figure
+# Figure: Changes in strength for each participant in both the one and three sets groups
+
+# Fitting a mixed model
+# Want to compare the two groups and model any differences in change over time.
+# A mixed model can account for repeated data by using the subject indicator as a random effect.
+# Letting the groups vary from each other with timepoint * group. Let them vary over the timepoints
+# Each participant will be compared from their own starting point (intercept).
+lmer1 <- lmer(load ~ timepoint * group + (1|subject), data = isok.data)
+
+
+summary(lmer1) # Printing the results
+
+## Fixed effects from the lmer1 model
+# Intercept are the average at pre (single)
+# Timepointsession1 are the difference pre to mid (single)
+# Timepointpost are the difference pre to post (single)
+
+# Groupmultiple are the difference between single and multiple at pre
+# Timepointsession1:groupmultiple are the difference between single and multipleat mid
+# Timepointpost:groupmultiple are the difference between single and multiple at post
+
+## Variables of interest
+# The difference between the groups when we have controlled for baseline after a trainingintervention
+# 8.5 kg difference between single and multiple at mid 
+# 24.2 kg difference between single and multiple at post (three sets stronger)
+
+
+# Residual plot to check if our assumptions are met
+plot(lmer1)
+# The residual variation is similar over the range of fitted values, so this is an ok model we can use.
+
+
+# Model estimates
+# Estimated averages at each time-point within each group
+est <- emmeans(lmer1, specs = ~ timepoint|group) # Specs specifies what means to calculate
+
+est # Printing the results
+
+
+# Plotting the model estimates (estimated averages)
+# Have to convert the object created with emmeans to a data frame to be able to plot it
+est.figure <- est %>%
+  data.frame() %>% 
+  mutate(timepoint = factor(timepoint, levels = c("pre", "session1", "post"))) %>%
+  ggplot(aes(timepoint, emmean, group = group, color = group)) + 
+  geom_errorbar(aes(ymin = lower.CL, ymax = upper.CL), # Represent the 95% CI
+                position = position_dodge(width = 0.2), # Moves the errorbars away from each other, same with the lines and points further down
+                width = 0.1) + # Decides the width of the errorbars, the same under
+  geom_line(position = position_dodge(width = 0.2)) +
+  geom_point(position = position_dodge(width = 0.2)) +
+  labs(x = "Time-point", y = "Isokinetic strength at 60 degrees (Nm)") + # New labels on the axis
+  theme_minimal()
+# Figure: Estimated averages in each group at time-points pre, mid and post
+
+est.figure # Printing the figure
+
+## Tips!
+# Choosing between SD og CI, CI are preferred when plotting
+# Remember to only present a result once! Not the same result in both a table and a figure!
+
+
+raw.est.figure <- est %>%
+  # The model estimates 
+  data.frame() %>%
+  mutate(timepoint = factor(timepoint, 
+                            levels = c("pre", "session1", "post"))) %>%
+  ggplot(aes(timepoint, emmean, group = group, color = group) ) + 
+  
+  # Adding raw data
+  geom_line(data = isok.data, aes(timepoint, load, group = subject, color = group), 
+            alpha = 0.4) + # Add transparency to individual lines
+  geom_errorbar(aes(ymin = lower.CL, ymax = upper.CL), 
+                position = position_dodge(width = 0.2), 
+                width = 0.1) +
+  geom_line(position = position_dodge(width = 0.2)) +
+  geom_point(position = position_dodge(width = 0.2)) +
+  labs(x = "", y = "Isokinetic strength\n at 60 degrees (Nm)", 
+       color = "Intensity") + # New labels on the axis
+  # Removing text and indicators on the x-axis as we are going to combine this plot with another, and then we use the text and indicators in that plot
+  # FUNGERER IKKE
+  theme(axis.text.x = element_blank(), 
+        axis.title.x = element_blank()) +
+  theme_minimal()
+# Figure: Changes in strength for each participant and estimated averages in each group at time-points pre, mid and post
+
+
+raw.est.figure # Printing the figure
+
+
+
+# Saving the confidence intervals
+# Getting the 95% CI from each model coefficient
+conf_intervals <- confint(lmer1)
+conf_intervals
+# CI at post do not contain 0. Ergo, we have proof against the null hypothesis that says that there are no difference between the groups. There is a difference!
+# Present random effects as well?
+
+
+# Saving the regression coefficients
+# Getting the estimates of the interaction coefficients from the model
+coefs <- summary(lmer1)$coef
+coefs
+
+# Using cbind (column bind) to combine the two data frames into one data frame
+coef_summary <- cbind(coefs, data.frame(conf_intervals)[3:8, ]) 
+coef_summary
+
+# Printing a table using kable()
+coef.table <- coef_summary %>%
+  kable(col.names = c("Estimate", "Std. Error", "t-value", "Lower CI", "Higher CI"), # Column names
+        digits = c(1, 1, 2, 1, 1),# Deciding how many decimals at each value
+        caption = "**Table 1:** Coefficient estimates, standard error, t-statistic, lower and upper confidence interval at time-points pre, session1 and post in both the one and three sets group.")
+# Table: Coefficient estimates, standard error, t-statistic, lower and upper confidence interval
+
+coef.table   # Printing the table
+
+# HVORDAN FÅ DETTE TIL Å BLI BEDRE?
+# Ta med hele tabellen eller bare de to siste radene?
+# Hvordan få tabellen og tabellteksten lenger?
+
+
+
+# Plot to show "What should be the recommended volume for strength development, one or three sets?"
+# Interested in the estimates "timepointsession1:groupmultiple" and "timepointpost:groupmultiple "
+
+# Reducing the data frame and plotting it to show estimated differences between groups at session1 and post after accounting for baseline differences
+est.diff.figure <- coef_summary %>%
+  mutate(coef = rownames(.)) %>%
+  # Filter only the interaction variables
+  filter(coef %in% c("timepointsession1:groupmultiple", "timepointpost:groupmultiple")) %>%
+  # Making a "timepoint" variable to represent the "isok.data" data set.
+  mutate(timepoint = gsub("timepoint", "", coef), 
+         timepoint = gsub(":groupmultiple", "", timepoint)) %>%
+  # Adding a row so that timepoint = "pre" is represented
+  add_row(timepoint = "pre", coef = "pre") %>%
+  # Fixing the order of the time variable
+  mutate(timepoint = factor(timepoint, levels = c("pre", "session1", "post"))) %>%
+  # Creating the plot
+  ggplot(aes(timepoint, Estimate)) + 
+  # Adding a line indicating zero geom_hline (horizontal line)
+  geom_hline(yintercept = 0, lty = 2) +
+  # Adding errorbars and points
+  geom_errorbar(aes(ymin = X2.5.., ymax = X97.5..), width = 0.1) +
+  geom_point(shape = 24, size = 3, fill = "white") +
+  # Changing axis titles and title in the legend
+  labs(x = "Time-point", y = "Average group differences\n(Nm, 95% CI)", 
+       color = "Intensity") + 
+  theme_minimal()
+
+est.diff.figure # Printing the figure
+# Figure: Average group differences in 1 RM legpress at session 1 and post, comparing 10 RM to 30 RM.
+
+# Answer to our question: three sets should be the recommended volume
+# The points show the difference between the groups at the different time-points, comparing three sets one set.
+
+
+# Combining the plots to one plot
+# Using "raw.est.figure" and "est.diff.figure"
+figure1 <- plot_grid(raw.est.figure, est.diff.figure, ncol = 1, 
+          # Aligning vertically so that the x axis matches
+          align = "v", 
+          # Setting alignment so that axis align both on the left (l) and right (r) axis
+          axis = "lr")
+
+figure1 # Printing the figure
+# Figure 1: Changes in 1 RM legpress for each participant and estimated averages in each group at time-points pre, session1 and post. Average group differences in 1 RM legpress at time-points session1 and post.
+
+
+# Summary statistics, getting even more information about the model we have fitted
+summary(lmer1)
+
+
+
+
+```
+
+```{r, echo=FALSE, warning=FALSE, message=FALSE, fig.keep='first', fig.cap= "**Figure 1:** Changes in isokinetic strength at 60 degrees in knee extension for each participant and estimated averages in the three sets and one set group at time-points pre, session1 and post. Average group differences at time-points session1 and post, comparing three sets to one set."}
+# Chunk to print the results
+
+
+figure1 # Printing the figure
+
+
+```
+
+```{r, echo=FALSE, warning=FALSE, message=FALSE, fig.keep='first', fig.cap= "**Table 1:** Coefficient estimates, standard error, t-statistic, lower and upper confidence interval at time-points pre, mid and post in both the single-set and multiple-set groups."}
+# Chunk to print the results
+
+coef.table # Printing the table
+
+```
+
+
+The multiple-set group´s load was 7.9 (18.0) Nm less than the single-set group´s load at pre (baseline). At session1 and post, the multiple-set group´s load was 8.5 (8.2) Nm and 24.2 (8.2) Nm higher than the single-set group´s load, respectively. 
+
+## Discussion
+As the confidence intervals contained 0, there were no difference between the groups in isokinetic strength at 60 degrees in knee extension at pre (95% CI: [-43.0, 27.1], *t*(33) = -0.44) or session1 (95% CI: [-7.4, 24.4], *t*(33) = 1.04), respectively. At post-test after the training intervention, there was a difference between the multiple-set (three sets) and the single-set groups (95% CI: [8.3, 40.1], *t*(33) = 2.94). 
+
+This study therefore suggests that three sets give a larger development of strength measured as isokinetic strength at 60 degrees in knee extension, compared to one set. In other words, the findings suggests that three sets should be the recommended volume for strength development, not one set.
+
+## References
