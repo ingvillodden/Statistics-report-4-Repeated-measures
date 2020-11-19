@@ -9,9 +9,9 @@ bibliography: References4.bib
 # 10 vs 30 RM for strength development
 
 ## Introduction
-Anderson & Kearney [-@Anderson1982] conducted their study on male college students, and found that after a 9 weeks training intervention, 3x6-8 repetition maximum (RM) gave a greater increase in 1 RM benchpress compared to 2x30-40 RM (20 % and 8 %, respectively). However, Stone & Coulter [-@Stone1994] conducted a similar 9 weeks intervention on female collage students, and found that both 3x6-8 RM and 1x30-40 RM gave significant pre to post increases in 1 RM in upper and lower body exercises. They could not find a significant difference between the groups after the intervention.
+What is the recommended intensity for strength development, low- or high-repetition training? Anderson & Kearney [-@Anderson1982] conducted a study on male college students, and found that after a 9 weeks training intervention, 3x6-8 repetition maximum (RM) training, gave a greater increase in 1 RM benchpress compared to 2x30-40 RM training (20 % and 8 %, respectively). However, Stone & Coulter [-@Stone1994] who conducted a similar 9 weeks training intervention on female collage students, found that both 3x6-8 RM and 1x30-40 RM gave significant pre to post increases in 1 RM in both upper and lower body exercises. They could not find a significant difference between the groups after the intervention. These results suggests that both low- and high-repetition training improves strength measured as 1 RM, and to find out if one of them is superior to the other and thus should be recommended, more studies are required
 
-In this study, the participants were assigned to one of two groups training with either 10 RM or 30 RM. Strength was tested as 1 RM legpress and benchpress, before (pre), during (mid) and after (post) the training intervention. 27 participants completed the first two trials, and 24 participants completed all three trials.
+In this study we wanted to compare the effects of 10 and 30 RM training. The participants were assigned to one of two groups, training with either 10 RM or 30 RM. Strength was tested as 1 RM legpress and benchpress before (pre), during (mid) and after (post) the training intervention. 27 participants completed the first two tests, and 24 participants completed all three tests.
 
 The goal of this report is to find out which training intensity, 10 or 30 RM, gives the larger development of strength measured as 1 RM legpress.
 
@@ -255,8 +255,8 @@ coef.table # Printing the table
 The 10 RM group lifted 7.6 (27.9) kg less than the 30 RM group at pre (baseline). At mid and post, the 10 RM group lifted 11.1 (12.5) kg and 38.6 (13.0) kg more than the 30 RM group, respectively.
 
 ## Discussion
-As the confidence intervals contained 0, there were no difference between the groups in 1 RM legpress at pre (95% CI: [-62.0, 46.8], *t*(26) = -0.27), nor at mid (95% CI: [-12.8, 35.0], *t*(26) = 0.89), respectively. At post-test after the training intervention, there was a difference between the 10 RM group and the 30 RM group (95% CI: [13.6, 63.6], *t*(23) = 2.96). 
+As the confidence intervals contained 0, there were no difference between the groups in 1 RM legpress at pre (95% CI: [-62.0, 46.8], *t*(26) = -0.27), nor at mid (95% CI: [-12.8, 35.0], *t*(26) = 0.89), respectively. At post-test after the training intervention, there was a difference between the 10 RM group and the 30 RM group, as the confidence interval did not contain 0 (95% CI: [13.6, 63.6], *t*(23) = 2.96). 
 
-This study therefore suggests that 10 RM give a larger development of strength measured as 1 RM in legpress, compared to 30 RM. In other words, the findings suggests that 10 RM should be the recommended intensity for strength development, not 30 RM.
+This study therefore suggests that 10 RM training gives a larger development of strength measured as 1 RM in legpress, compared to 30 RM training. In other words, the findings suggests that 10 RM should be the recommended intensity for strength development.
 
 ## References
