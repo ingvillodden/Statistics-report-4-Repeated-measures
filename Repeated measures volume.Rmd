@@ -9,11 +9,9 @@ bibliography: References4.bib
 # Single-set vs multiple-set training for strength development
 
 ## Introduction
-What is the recommended volume for strength development, single- or multiple-set training? Previously, Schlumberger et al. [-@Schlumberger2001], have conducted a 6 weeks training intervention on women where the participants performed either one-set or multiple-set training, and found significant strength improvements in both groups (6 % and 15 %, respectively). However, calculation of effect sizes and percentage gains revealed higher strength gains in the multiple-set group compared to the single-set group. This is supported by a meta analysis conducted by Galvão et al. [-@Galvão2004], who states that studies prior to 1998 demonstrated inconsistent findings between single-set and multiple-set programs, but that recent evidence suggests that multiple-sets promote additional benefits following short- and long-term training.
+What is the recommended volume for strength development, single- or multiple-set training? Schlumberger et al. [-@Schlumberger2001] have previously conducted a 6 weeks training intervention on women, where the participants performed either one-set or multiple-set training. They found significant strength improvements in both groups (6 % and 15 %, respectively), but calculation of effect sizes and percentage gains revealed higher strength gains in the multiple-set group compared to the single-set group. These findings is supported by a meta analysis conducted by Galvão et al. [-@Galvão2004], who states that studies prior to 1998 demonstrated inconsistent findings between single-set and multiple-set programs, but that recent evidence suggests that multiple-set programs promote additional benefits following both short- and long-term training. Still, more studies would be advantageous.
 
-In this study we wanted to investigate this closer, comparing single-set training to multiple-set training. 34 participants completed a strength training intervention were they were randomized to single-set (one set) or multiple-set (three sets) training, randomized to either leg. Strength was measured as isokinetic strength at 60, 120 and 240 degrees and isometric strength, all in knee extension. Strength was measured two times before the training intervention (pre-test and session 1), and one time after the intervention (post-test). We will use data from one leg per participant, which means that participants have been allocated to either the single- or the multiple-set group. 
-
-The goal of this report is to find out which training volume, one or three sets, gives the larger development of strength measured as isokinetic strength at 60 degrees in knee extension.
+Therefore, we wanted to take a closer look at the effects of single- and multiple-set training. The goal of the study is to find out which training volume, one or three sets, gives the larger development of strength measured as isokinetic strength at 60 degrees in knee extension.
 
 #### Question
 > What should be the recommended volume for strength development, one or three sets?
@@ -23,7 +21,11 @@ The goal of this report is to find out which training volume, one or three sets,
 
 
 ## Methods
-We wanted to estimate the difference between the single- and multiple-set (three sets) groups in isokinetic strength at 60 degrees in knee extension, when controlling for baseline after a strength training intervention. The data set contained several variables, so we first had to reduce our data to only contain our variables of interest: the maximal isokinetic load at 60 degrees in knee extension, at pre-, session1- and post-test for both the single- and multiple-set groups. Because we have repeated measures, we have to account for correlated data to avoid that it affects the statistical power. A mixed model accounts for potential differences between the groups at baseline, and was therefore used to estimate the difference in mean between the two groups at both pre-, session1- and post-test. Confidence intervals were used to evaluate the effects. The data was plotted in a combined plot, where the first one shows changes in strength for each participant and estimated averages in each group at time-points pre, session1 and post, and the second shows the average group differences at time-points session1 and post.
+#### Study design
+In this study, 34 participants completed a strength training intervention were they were randomized to single-set (one set) or multiple-set (three sets) training, randomized to either leg. Strength was measured as isokinetic strength at 60, 120 and 240 degrees and isometric strength, all in knee extension. Strength was measured two times before the training intervention (pre-test and session 1), and one time after the intervention (post-test). We will use data from one leg per participant, which means that participants have been allocated to either the single- or the multiple-set group. In this way we could compare the effects of one set or three sets training.
+
+#### Statistical analysis
+We wanted to estimate the difference between the single- and multiple-set (three sets) group in isokinetic strength at 60 degrees in knee extension, when controlling for baseline after a strength training intervention. The data set contained several variables, so we first had to reduce our data to only contain our variables of interest: the maximal isokinetic load at 60 degrees in knee extension, at pre-, session1- and post-test for both the single- and multiple-set group. Because we have repeated measures, we have to account for correlated data to avoid that it affects the statistical power. A mixed model accounts for potential differences between the groups at baseline, and was therefore used to estimate the difference in mean between the two groups at both pre-, session1- and post-test. Confidence intervals were used to evaluate the effects. The data was plotted in a combined plot, where the first one shows changes in strength for each participant and estimated averages in each group at time-points pre, session1 and post, and the second shows the average group differences at time-points session1 and post (figure 1). The statistics of the estimates is presented in a table (table 1).
 
 ## Results
 ```{r, include=FALSE, warning=FALSE, message=FALSE}
@@ -178,9 +180,10 @@ coef.table <- coef_summary %>%
 
 coef.table   # Printing the table
 
-# HVORDAN FÅ DETTE TIL Å BLI BEDRE?
+# HVORDAN FÅ DETTE TIL Å BLI BEDRE? 
 # Ta med hele tabellen eller bare de to siste radene?
-# Hvordan få tabellen og tabellteksten lenger?
+# Hvordan få tabellen og tabellteksten lenger og svart?
+# Hvordan få mellomrom mellom resultatteksten og tabellen?
 
 
 
@@ -258,8 +261,8 @@ coef.table # Printing the table
 The load in the multiple-set group was 7.9 (18.0) Nm less than in the single-set group at pre (baseline). At session1 and post, the load in the multiple-set group was 8.5 (8.2) Nm and 24.2 (8.2) Nm higher than in the single-set group, respectively. 
 
 ## Discussion
-As the confidence intervals contained 0, there were no difference between the groups in isokinetic strength at 60 degrees in knee extension at pre (95% CI: [-43.0, 27.1], *t*(33) = -0.44) or session1 (95% CI: [-7.4, 24.4], *t*(33) = 1.04), respectively. At post-test after the training intervention, there was a difference between the multiple-set (three sets) and the single-set (one set) groups, as the confidence interval did not contain 0 (95% CI: [8.3, 40.1], *t*(33) = 2.94). 
+As the confidence intervals contained 0, there were no difference between the groups in isokinetic strength at 60 degrees in knee extension at pre (95% CI: [-43.0, 27.1], *t*(33) = -0.44) or session1 (95% CI: [-7.4, 24.4], *t*(33) = 1.04), respectively. At post-test after the training intervention, there was a difference between the multiple-set and the single-set group, as the confidence interval did not contain 0 (95% CI: [8.3, 40.1], *t*(33) = 2.94). 
 
-This study therefore suggests that three sets give a larger development of strength measured as isokinetic strength at 60 degrees in knee extension, compared to one set. In other words, the findings suggests that three sets should be the recommended volume for strength development.
+This study therefore suggests that three sets give a larger development of strength measured as isokinetic strength at 60 degrees in knee extension, compared to one set. Our findings indicate that three sets should be the recommended volume for strength development. That multiple-set training may be superior to single-set training, is supported by Schlumberger et al. [-@Schlumberger2001] and Galvão et al. [-@Galvão2004].
 
 ## References
