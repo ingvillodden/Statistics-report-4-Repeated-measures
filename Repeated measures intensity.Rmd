@@ -9,11 +9,9 @@ bibliography: References4.bib
 # 10 vs 30 RM for strength development
 
 ## Introduction
-What is the recommended intensity for strength development, low- or high-repetition training? Anderson & Kearney [-@Anderson1982] conducted a study on male college students, and found that after a 9 weeks training intervention, 3x6-8 repetition maximum (RM) training, gave a greater increase in 1 RM benchpress compared to 2x30-40 RM training (20 % and 8 %, respectively). However, Stone & Coulter [-@Stone1994] who conducted a similar 9 weeks training intervention on female collage students, found that both 3x6-8 RM and 1x30-40 RM gave significant pre to post increases in 1 RM in both upper and lower body exercises. They could not find a significant difference between the groups after the intervention. These results suggests that both low- and high-repetition training improves strength measured as 1 RM, and to find out if one of them is superior to the other and thus should be recommended, more studies are required
+What is the recommended intensity for strength development, low- or high-repetition training? Anderson & Kearney [-@Anderson1982] conducted a study on male college students, and found that after a 9 weeks training intervention, 3x6-8 repetition maximum (RM) training, gave a greater increase in 1 RM benchpress compared to 2x30-40 RM training (20 % and 8 %, respectively). However, Stone & Coulter [-@Stone1994] who conducted a similar 9 weeks training intervention on female collage students, found that both 3x6-8 RM and 1x30-40 RM gave significant pre to post increases in 1 RM in both upper and lower body exercises. In the latter study they could not find a significant difference between the groups after the training intervention. These results suggests that both low- and high-repetition training improves strength measured as 1 RM. To find out if one of the methods are superior to the other and therefore should be recommended, more studies are required.
 
-In this study we wanted to compare the effects of 10 and 30 RM training. The participants were assigned to one of two groups, training with either 10 RM or 30 RM. Strength was tested as 1 RM legpress and benchpress before (pre), during (mid) and after (post) the training intervention. 27 participants completed the first two tests, and 24 participants completed all three tests.
-
-The goal of this report is to find out which training intensity, 10 or 30 RM, gives the larger development of strength measured as 1 RM legpress.
+As a result of this, we wanted to take a closer look at the effects of low- and high-repetition training. The goal of the study is to find out which training intensity, 10 or 30 RM, gives the larger development of strength measured as 1 RM legpress.
 
 #### Question
 > What should be the recommended intensity for strength development?
@@ -22,7 +20,11 @@ The goal of this report is to find out which training intensity, 10 or 30 RM, gi
 > 10 RM gives a larger development of strength measured as 1 RM legpress, compared to 30 RM
 
 ## Methods
-We wanted to estimate the difference between the 10 RM and 30 RM groups in 1 RM legpress when controlling for baseline after a training intervention. The data set contained several variables, so we first had to reduce our data to only contain our variables of interest: the 1 RM load in legpress at pre-, mid- and post-test for both the 10 RM and 30 RM group. Because we have repeated measures, we have to account for correlated data to avoid that it affects the statistical power. A mixed model accounts for potential differences between the groups at baseline, and was therefore used to estimate the difference in mean between the two groups at both pre-, mid- and post-test. Confidence intervals were used to evaluate the effects. The data was plotted in a combined plot, where the first one shows changes in strength for each participant and estimated averages in each group at time-points pre, mid and post, and the second shows the average group differences at time-points mid and post.
+#### Study design
+To compare the effects of 10 and 30 RM training, the participants of the study were assigned to one of two groups: the 10 RM group or the 30 RM group. Strength was tested as 1 RM legpress and benchpress before (pre), during (mid) and after (post) the training intervention. 27 participants completed the first two tests, and 24 participants completed all three tests.
+
+#### Statistical analysis
+We wanted to estimate the difference between the 10 RM and the 30 RM group in 1 RM legpress when controlling for baseline after a training intervention. The data set contained several variables, so we first had to reduce our data to only contain our variables of interest: the 1 RM load in legpress at pre-, mid- and post-test for both the 10 RM and 30 RM group. Because we have repeated measures, we have to account for correlated data to avoid that it affects the statistical power. A mixed model accounts for potential differences between the groups at baseline, and was therefore used to estimate the difference in mean between the two groups at both pre-, mid- and post-test. Confidence intervals were used to evaluate the effects. The data was plotted and presented in a combined plot, where the first one shows changes in strength for each participant and estimated averages in each group at time-points pre, mid and post, and the second shows the average group differences at time-points mid and post (figure 1). The statistics of the estimates is presented in a table (table 1).
 
 
 ## Results
@@ -179,9 +181,10 @@ coef.table <- coef_summary %>%
 
 coef.table   # Printing the table
 
-# HVORDAN FÅ DETTE TIL Å BLI BEDRE?
+# HVORDAN FÅ DETTE TIL Å BLI BEDRE? 
 # Ta med hele tabellen eller bare de to siste radene?
-# Hvordan få tabellen og tabellteksten lenger?
+# Hvordan få tabellen og tabellteksten lenger og svart?
+# Hvordan få mellomrom mellom resultatteksten og tabellen?
 
 
 
@@ -208,7 +211,7 @@ est.diff.figure <- coef_summary %>%
   geom_errorbar(aes(ymin = X2.5.., ymax = X97.5..), width = 0.1) +
   geom_point(shape = 24, size = 3, fill = "white") +
   # Changing axis titles and title in the legend
-  labs(x = "Time-point", y = "Average group differences\n(kg, 95% CI)", 
+  labs(x = "Time-point", y = "Average group differences\n1RM (kg, 95% CI)", 
        color = "Intensity") + 
   theme_minimal()
 
@@ -245,7 +248,7 @@ figure1 # Printing the figure
 
 ```
 
-```{r, echo=FALSE, warning=FALSE, message=FALSE, fig.keep='first', fig.cap= "**Table 1:** Coefficient estimates, standard error, t-statistic, lower and upper confidence interval at time-points pre, mid and post in both the 10 RM and 30 RM group."}
+```{r, echo=FALSE, warning=FALSE, message=FALSE, fig.keep='first', fig.cap= "**Table 1:** Coefficient estimates, standard error, t-statistic and lower and upper confidence intervals at time-points pre, mid and post in both the 10 RM and 30 RM group."}
 # Chunk to print the results
 
 coef.table # Printing the table
@@ -257,6 +260,6 @@ The 10 RM group lifted 7.6 (27.9) kg less than the 30 RM group at pre (baseline)
 ## Discussion
 As the confidence intervals contained 0, there were no difference between the groups in 1 RM legpress at pre (95% CI: [-62.0, 46.8], *t*(26) = -0.27), nor at mid (95% CI: [-12.8, 35.0], *t*(26) = 0.89), respectively. At post-test after the training intervention, there was a difference between the 10 RM group and the 30 RM group, as the confidence interval did not contain 0 (95% CI: [13.6, 63.6], *t*(23) = 2.96). 
 
-This study therefore suggests that 10 RM training gives a larger development of strength measured as 1 RM in legpress, compared to 30 RM training. In other words, the findings suggests that 10 RM should be the recommended intensity for strength development.
+This study therefore suggests that 10 RM training gives a larger development of strength measured as 1 RM in legpress, compared to 30 RM training. Our findings indicate that 10 RM should be the recommended intensity for strength development. This is supported by the findings of Anderson & Kearney [-@Anderson1982]. 
 
 ## References
